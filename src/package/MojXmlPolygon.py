@@ -113,5 +113,13 @@ def GetIdHudeTable(xml_dict: dict):
                     IdHudeTable[idref]['地図番号'] = zRef['地図番号']
                     if '縮尺分母' in zRef.keys():
                         IdHudeTable[idref]['縮尺分母'] = zRef['縮尺分母']
+                    if '地図種類' in zRef.keys():
+                        IdHudeTable[idref]['地図種類'] = zRef['地図種類']
+                    if '地図分類' in zRef.keys():
+                        IdHudeTable[idref]['地図分類'] = zRef['地図分類']
+                    if '地図作成年月日' in zRef.keys():
+                        IdHudeTable[idref]['地図作成年月日'] = zRef['地図作成年月日']
+                    if '備付地図年月日' in zRef.keys():
+                        IdHudeTable[idref]['備付地図年月日'] = zRef['備付地図年月日']
 
     return IdHudeTable
