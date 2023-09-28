@@ -3,7 +3,7 @@
 import argparse
 import traceback
 import package.xml2geojson
-
+import package.zip2xml
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -21,7 +21,8 @@ def main():
     exclude_flag = args.exclude
 
     try:
-        package.xml2geojson.SaveGeoJson(srcFile, exclude_flag)
+        package.zip2xml.SaveGeoJson(srcFile, exclude_flag)
+        # package.xml2geojson.SaveGeoJson(srcFile, exclude_flag)
     except Exception:
         print('Error Source File:', srcFile)
         traceback.print_exc()
