@@ -72,6 +72,8 @@ def MojXMLtoGeoJSON(mojObj: dict, exclude_flag):
             for i in range(len(interior)):
                 interior[i] = [k for k, g in itertools.groupby(interior[i])]
 
+        exterior_org = exterior
+        interior_org = interior
         crs_name = mojObj['named_crs']
 
         # 測地系の変換 to 6668(JGD2011)
@@ -83,15 +85,24 @@ def MojXMLtoGeoJSON(mojObj: dict, exclude_flag):
             crs_name = 'urn:ogc:def:crs:EPSG::6668'
 
         if len(interior) == 0:
-            feature['geometry'] = {'type': 'MultiPolygon',
-                                   'coordinates': [[exterior],], }
+            feature['geometry'] = {'type': 'MultiPolygon', 'coordinates': [[exterior],], }
         elif len(interior) > 0:
             coord = []
             coord.append(exterior)
             for i in interior:
                 coord.append(i)
-            feature['geometry'] = {'type': 'MultiPolygon',
-                                   'coordinates': [coord], }
+            feature['geometry'] = {'type': 'MultiPolygon', 'coordinates': [coord], }
+
+        # 変換前の座標をgeometry_orgに保存する
+        if len(interior_org) == 0:
+            feature['geometry_org'] = {'type': 'MultiPolygon', 'coordinates': [[exterior_org],], }
+        elif len(interior_org) > 0:
+            coord_org = []
+            coord_org.append(exterior_org)
+            for i in interior_org:
+                coord_org.append(i)
+            feature['geometry_org'] = {'type': 'MultiPolygon', 'coordinates': [coord_org], }
+
         feature = PointOnSurface.PointOnSurface(feature)
         feature_list.append(feature)
 
